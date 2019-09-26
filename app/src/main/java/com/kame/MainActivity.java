@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.kame.functions.EditImageActivity;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
@@ -17,6 +18,13 @@ import com.zhihu.matisse.engine.impl.GlideEngine;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+    private static final String TAG = MainActivity.class.getSimpleName();
+    private Button mBtnEditImage;
+    private Button mBtnTakePhoto;
+    private Button mBtnComposeImgVideo;
+    private Button mBtnEditVideo;
+    private Button mBtnMixVideo;
+
     private static final int REQUEST_CODE_CHOOSE = 23;//定义请求码常量
     private Button mBtnChooseImage;
     List<Uri> mSelected;
@@ -25,35 +33,66 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initUI();
+    }
 
-        mBtnChooseImage = findViewById(R.id.btn_choose_image);
-        mBtnChooseImage.setOnClickListener(this);
+    private void initUI(){
+        mBtnEditImage = findViewById(R.id.btn_edit_image);
+        mBtnEditImage.setOnClickListener(this);
+        mBtnTakePhoto = findViewById(R.id.btn_take_photo);
+        mBtnTakePhoto.setOnClickListener(this);
+        mBtnComposeImgVideo = findViewById(R.id.btn_compose_image);
+        mBtnComposeImgVideo.setOnClickListener(this);
+        mBtnEditVideo = findViewById(R.id.btn_edit_video);
+        mBtnEditVideo.setOnClickListener(this);
+        mBtnMixVideo = findViewById(R.id.btn_mix_edit);
+        mBtnMixVideo.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_choose_image:
-                chooseMedia();
+            case R.id.btn_edit_image:
+                editImage();
+                break;
+            case R.id.btn_take_photo:
+                takePhoto();
+                break;
+            case R.id.btn_compose_image:
+                composeVideo();
+                break;
+            case R.id.btn_edit_video:
+                editVideo();
+                break;
+            case R.id.btn_mix_edit:
+                mixEditVideo();
                 break;
             default:
                 break;
         }
     }
 
-    private void chooseMedia(){
-        Matisse
-                .from(MainActivity.this)
-                .choose(MimeType.ofAll())//照片视频全部显示
-                .countable(true)//有序选择图片
-                .maxSelectable(9)//最大选择数量为9
-                .gridExpectedSize(480)//图片显示表格的大小getResources()
-//                .getDimensionPixelSize(R.dimen.grid_expected_size)
-                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)//图像选择和预览活动所需的方向。
-                .thumbnailScale(0.85f)//缩放比例
-                .theme(R.style.Matisse_Dracula)//主题  暗色主题 R.style.Matisse_Dracula
-                .imageEngine(new GlideEngine())//加载方式
-                .forResult(REQUEST_CODE_CHOOSE);//请求码
+    private void editImage(){
+        Log.e(TAG,"function editImage");
+
+        Intent editImageIntent = new Intent(MainActivity.this, EditImageActivity.class);
+        startActivity(editImageIntent);
+    }
+
+    private void takePhoto(){
+        Log.e(TAG,"function takePhoto");
+    }
+
+    private void composeVideo(){
+        Log.e(TAG,"function composeVideo");
+    }
+
+    private void editVideo(){
+        Log.e(TAG,"function editVideo");
+    }
+
+    private void mixEditVideo(){
+        Log.e(TAG,"function mixEditVideo");
     }
 
     @Override
